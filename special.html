@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Special Offers - Bean Boutique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/style.css"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+ <nav class="navbar" role="navigation">
+    <div class="logo" aria-label="Bean Boutique Logo">Bean Boutique</div>
+    <form class="nav-search" id="productSearchForm" role="search" aria-label="Site Search" style="position:relative;">
+      <input type="search" name="q" id="productSearchInput" placeholder="Search..." aria-label="Search" />
+      <span id="clearSearchBtn" style="display:none; position:absolute; right:48px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:1.2rem; color:#1a237e;">&times;</span>
+      <button type="submit" aria-label="Submit search">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </form>
+    <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" type="button" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="nav-links" id="mobile-nav">
+      <li class="mobile-search">
+        <form class="nav-search mobile" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+          <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+          <button type="submit" aria-label="Submit search">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="coffee-bean.html">Coffee Beans</a></li>
+      <li><a href="brewing-equipment.html">Brewing Equipment</a></li>
+      <li><a href="special.html">Special Offers</a></li>
+      <li><a href="workshop.html">Events</a></li>
+      <li><a href="seasonal-food-&-drink.html">Seasonal</a></li>
+      <li><a href="shopping-cart.html">Cart</a></li>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#contact">Contact Us</a></li>
+      <li><a href="#" id="loginBtn" aria-haspopup="true">Login</a></li>
+      <li><a href="#" id="signupBtn" aria-haspopup="true">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="bean-hero" aria-label="Special Offers Introduction">
+    <h1>Special Offers & Subscription</h1>
+    <p>Don't miss out on our hottest deals and exclusive perks</p>
+  </section>
+
+  <!-- Special Offers -->
+  <section class="bean-products" id="productList" aria-label="Special Offers Products">
+    <div class="bean-card">
+      <img src="./images/aeropress.png" alt="Offer 1">
+      <h3>Buy 1 Get 1 Free</h3>
+      <p>Get one free when you buy any bag of Arabica beans.</p>
+      <button class="add-cart" aria-label="Claim Buy 1 Get 1 Free Offer">Claim Offer</button>
+    </div>
+    <div class="bean-card">
+      <img src="./images/espresso-machine.png" alt="Offer 2">
+      <h3>15% Off Equipment</h3>
+      <p>Save on all French Press and AeroPress kits this month.</p>
+      <button class="add-cart" aria-label="Claim 15% Off Equipment Offer">Claim Offer</button>
+    </div>
+    <div class="bean-card">
+      <img src="./images/mug.png" alt="Offer 3">
+      <h3>Free Mug</h3>
+      <p>Spend $50 or more and receive a Bean Boutique mug.</p>
+      <button class="add-cart" aria-label="Claim Free Mug Offer">Claim Offer</button>
+    </div>
+  </section>
+
+  <!-- Notification Area -->
+  <div id="notification" style="display:none; position:fixed; bottom:20px; right:20px; background-color:#4CAF50; color:white; padding:10px; border-radius:5px;">
+    Offer claimed!
+  </div>
+
+  <!-- Subscription Form -->
+  <section class="subscribe" aria-label="Newsletter Subscription">
+    <h2>Subscribe to Our Newsletter</h2>
+    <p>Get the latest news, discounts, and coffee love!</p>
+    <form id="subscribeForm">
+      <input type="text" id="subscriberName" placeholder="Your Name" required />
+      <input type="email" id="subscriberEmail" placeholder="Your Email" required />
+      <button type="submit">Subscribe Now</button>
+      <p id="subMsg" class="hidden"></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Follow Us</p>
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook"></a>
+      <a href="#" aria-label="Instagram"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png" alt="Instagram"></a>
+      <a href="#" aria-label="Twitter"><img src="https://cdn-icons-png.flaticon.com/24/733/733635.png" alt="Twitter"></a>
+    </div>
+    <p>&copy; 2025 Bean Boutique Coffee Shop</p>
+  </footer>
+
+  <!-- Login Form Popup -->
+  <div class="popup" id="loginPopup" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
+    <div class="popup-content">
+      <span class="close-btn" aria-label="Close">&times;</span>
+      <h2 id="loginTitle">Login</h2>
+      <input type="text" placeholder="Username" required />
+      <input type="password" placeholder="Password" required />
+      <button>Login</button>
+    </div>
+  </div>
+
+  <!-- Sign Up Form Popup -->
+  <div class="popup" id="signupPopup" role="dialog" aria-labelledby="signupTitle" aria-hidden="true">
+    <div class="popup-content">
+      <span class="close-btn" aria-label="Close">&times;</span>
+      <h2 id="signupTitle">Sign Up</h2>
+      <input type="text" placeholder="Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button>Sign Up</button>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu toggle function
+    function toggleMenu() {
+        const mobileNav = document.getElementById('mobile-nav');
+        mobileNav.classList.toggle('active');
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        mobileMenuBtn.classList.toggle('active');
+        const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !expanded);
+    }
+    $(document).ready(function() {
+      $(".add-cart").click(function() {
+        // Get offer information from the parent card
+        const card = $(this).closest('.bean-card');
+        const name = card.find('h3').text() + " (Special Offer)";
+        // Set price based on offer type
+        let price = 0;
+        if (name.includes("Buy 1 Get 1")) price = 12.99;
+        else if (name.includes("15% Off")) price = 25.49;
+        else if (name.includes("Free Mug")) price = 0;
+        else price = 9.99; // Default price
+        // Get existing cart or create new one
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        // Check if item already exists in cart
+        const existingItemIndex = cart.findIndex(item => item.name === name);
+        if (existingItemIndex > -1) {
+          // Increment quantity if item already exists
+          cart[existingItemIndex].qty += 1;
+        } else {
+          // Add new item to cart
+          cart.push({name: name, price: price, qty: 1});
+        }
+        // Save updated cart to localStorage
+        localStorage.setItem("cart", JSON.stringify(cart));
+        // Show notification with item name
+        $("#notification").text(name + " added to cart!").fadeIn().delay(2000).fadeOut();
+      });
+      // Existing subscription form code
+      $("#subscribeForm").submit(function(e) {
+        e.preventDefault();
+        const name = $("#subscriberName").val().trim();
+        const email = $("#subscriberEmail").val().trim();
+        if (name === "" || email === "") {
+          $("#subMsg").text("Please fill in both fields.").css("color", "red").removeClass("hidden");
+        } else {
+          $("#subMsg").text("Thanks for subscribing, " + name + "!").css("color", "green").removeClass("hidden");
+          $(this).trigger("reset");
+        }
+      });
+      // Delegated event binding for close button
+      $(document).on("click", ".popup .close-btn", function(e) {
+        e.stopPropagation();
+        $(this).closest(".popup").removeClass("active").attr("aria-hidden", "true");
+      });
+      // Popup logic for login and signup
+      $("#loginBtn").click(function() {
+        $("#loginPopup").addClass("active").attr("aria-hidden", "false");
+      });
+      $("#signupBtn").click(function() {
+        $("#signupPopup").addClass("active").attr("aria-hidden", "false");
+      });
+      // Close popup when clicking outside of it
+      $(window).click(function(event) {
+        if ($(event.target).hasClass('popup')) {
+          $(".popup").removeClass("active").attr("aria-hidden", "true");
+        }
+      });
+    });
+    document.getElementById('productSearchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const query = document.getElementById('productSearchInput').value.trim().toLowerCase();
+      let found = false;
+      document.querySelectorAll('#productList .bean-card').forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        const desc = card.querySelector('p').textContent.toLowerCase();
+        if (name.includes(query) || desc.includes(query) || query === '') {
+          card.style.display = '';
+          found = true;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      let noResult = document.getElementById('noResultMsg');
+      if (!found) {
+        if (!noResult) {
+          noResult = document.createElement('div');
+          noResult.id = 'noResultMsg';
+          noResult.textContent = 'No results found.';
+          noResult.style.textAlign = 'center';
+          noResult.style.color = '#c0392b';
+          document.getElementById('productList').appendChild(noResult);
+        }
+      } else if (noResult) {
+        noResult.remove();
+      }
+    });
+    // Show/hide clear (x) button
+    const searchInput = document.getElementById('productSearchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    searchInput.addEventListener('input', function() {
+      clearBtn.style.display = this.value ? 'inline' : 'none';
+    });
+    clearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      clearBtn.style.display = 'none';
+      document.querySelectorAll('#productList .bean-card').forEach(card => {
+        card.style.display = '';
+      });
+      const noResult = document.getElementById('noResultMsg');
+      if (noResult) noResult.remove();
+    });
+  </script>
+
+</body>
+</html>

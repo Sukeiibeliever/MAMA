@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workshops & Events - Bean Boutique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/style.css"/>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+ <nav class="navbar" role="navigation">
+    <div class="logo" aria-label="Bean Boutique Logo">Bean Boutique</div>
+    <form class="nav-search" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+      <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+      <button type="submit" aria-label="Submit search">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </form>
+    <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" type="button" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="nav-links">
+      <li class="mobile-search">
+        <form class="nav-search mobile" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+          <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+          <button type="submit" aria-label="Submit search">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="coffee-bean.html">Coffee Beans</a></li>
+      <li><a href="brewing-equipment.html">Brewing Equipment</a></li>
+      <li><a href="special.html">Special Offers</a></li>
+      <li><a href="workshop.html">Events</a></li>
+      <li><a href="seasonal-food-&-drink.html">Seasonal</a></li>
+      <li><a href="shopping-cart.html">Cart</a></li>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#contact">Contact Us</a></li>
+      <li><a href="#" id="loginBtn" aria-haspopup="true">Login</a></li>
+      <li><a href="#" id="signupBtn" aria-haspopup="true">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bean-hero" aria-label="Workshops and Events Introduction">
+    <h1>Workshops & Events</h1>
+    <p>Join us for an experience beyond just coffee</p>
+  </section>
+
+  <!-- Event Cards -->
+  <section class="bean-products" aria-label="Upcoming Events">
+    <div class="bean-card">
+      <img src="./images/latte-art-workshop.png" alt="Latte Art Workshop">
+      <h3>Latte Art Workshop</h3>
+      <p>Learn to create heart, tulip, and rosetta designs with our barista trainer.</p>
+      <p><strong>Date:</strong> July 25, 2025</p>
+      <button class="rsvp-btn" aria-label="RSVP for Latte Art Workshop">RSVP</button>
+    </div>
+    <div class="bean-card">
+      <img src="./images/brew-master-class.png" alt="Brew Masterclass">
+      <h3>Brew Masterclass</h3>
+      <p>Discover brewing techniques using pour-over and AeroPress methods.</p>
+      <p><strong>Date:</strong> August 10, 2025</p>
+      <button class="rsvp-btn" aria-label="RSVP for Brew Masterclass">RSVP</button>
+    </div>
+    <div class="bean-card">
+      <img src="./images/coffe-tasting.png" alt="Coffee Tasting Night">
+      <h3>Coffee Tasting Night</h3>
+      <p>Enjoy a guided tasting of specialty beans from around the world.</p>
+      <p><strong>Date:</strong> September 5, 2025</p>
+      <button class="rsvp-btn" aria-label="RSVP for Coffee Tasting Night">RSVP</button>
+    </div>
+  </section>
+
+  <!-- Notification Area -->
+  <div id="notification" style="display:none; position:fixed; bottom:20px; right:20px; background-color:#4CAF50; color:white; padding:10px; border-radius:5px;">
+    RSVP confirmed!
+  </div>
+
+  <!-- RSVP Form -->
+  <section class="subscribe" aria-label="RSVP Form">
+    <h2>Reserve Your Spot</h2>
+    <p>Fill in your details and we'll save you a seat!</p>
+    <form id="rsvpForm">
+      <input type="text" id="rsvpName" placeholder="Your Name" required />
+      <input type="email" id="rsvpEmail" placeholder="Your Email" required />
+      <button type="submit">RSVP Now</button>
+      <p id="rsvpMsg" class="hidden"></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Follow Us</p>
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook"></a>
+      <a href="#" aria-label="Instagram"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png" alt="Instagram"></a>
+      <a href="#" aria-label="Twitter"><img src="https://cdn-icons-png.flaticon.com/24/733/733635.png" alt="Twitter"></a>
+    </div>
+    <p>&copy; 2025 Bean Boutique Coffee Shop</p>
+  </footer>
+
+  <!-- Login Form Popup -->
+  <div class="popup" id="loginPopup" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
+    <div class="popup-content">
+      <span class="close-btn" aria-label="Close">&times;</span>
+      <h2 id="loginTitle">Login</h2>
+      <input type="text" placeholder="Username" required />
+      <input type="password" placeholder="Password" required />
+      <button>Login</button>
+    </div>
+  </div>
+
+  <!-- Sign Up Form Popup -->
+  <div class="popup" id="signupPopup" role="dialog" aria-labelledby="signupTitle" aria-hidden="true">
+    <div class="popup-content">
+      <span class="close-btn" aria-label="Close">&times;</span>
+      <h2 id="signupTitle">Sign Up</h2>
+      <input type="text" placeholder="Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button>Sign Up</button>
+    </div>
+  </div>
+
+    <script>
+      // ULTRA SIMPLE mobile menu - guaranteed to work
+      function toggleMenu() {
+        if (window.innerWidth > 768) return; // Only activate on mobile
+        const navMenu = document.querySelector('.nav-links');
+        navMenu.classList.toggle('active');
+        const menuBtn = document.getElementById('mobile-menu');
+        menuBtn.classList.toggle('active');
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', !expanded);
+      }
+      
+      // jQuery functionality for other features
+      $(document).ready(function() {
+        // RSVP functionality
+        $(".rsvp-btn").click(function() {
+          $("html, body").animate({
+            scrollTop: $("#rsvpForm").offset().top
+          }, 600);
+        });
+        
+        $("#rsvpForm").submit(function(e) {
+          e.preventDefault();
+          const name = $("#rsvpName").val().trim();
+          const email = $("#rsvpEmail").val().trim();
+          if (name === "" || email === "") {
+            $("#rsvpMsg").text("Please complete both fields.").css("color", "red").removeClass("hidden");
+          } else {
+            $("#notification").fadeIn().delay(2000).fadeOut();
+            $("#rsvpMsg").text("Thanks for RSVPing, " + name + "!").css("color", "green").removeClass("hidden");
+            $(this).trigger("reset");
+          }
+        });
+        
+        // Popup functionality
+        $("#loginBtn").click(function(e) {
+          e.preventDefault();
+          $("#loginPopup").addClass("active").fadeIn(300);
+        });
+        
+        $("#signupBtn").click(function(e) {
+          e.preventDefault();
+          $("#signupPopup").addClass("active").fadeIn(300);
+        });
+        
+        // Close popup when clicking outside
+        $(window).click(function(event) {
+          if ($(event.target).hasClass('popup')) {
+            $(".popup").removeClass("active").fadeOut(300);
+          }
+        });
+        
+        // Close button functionality
+        $(".close-btn").click(function() {
+          $(".popup").removeClass("active").fadeOut(300);
+        });
+      });
+    </script>
+
+</body>
+</html>

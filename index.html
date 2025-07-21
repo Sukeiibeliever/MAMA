@@ -1,0 +1,263 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Bean Boutique Coffee Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+    <link href="./css/style.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="navbar" role="navigation">
+      <div class="logo" aria-label="Bean Boutique Logo">Bean Boutique</div>
+      <form class="nav-search" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+        <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+        <button type="submit" aria-label="Submit search">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+      <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" type="button" onclick="toggleMenu()">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-links" id="mobile-nav">
+        <li class="mobile-search">
+          <form class="nav-search mobile" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+            <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+            <button type="submit" aria-label="Submit search">
+              <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </form>
+        </li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="coffee-bean.html">Coffee Beans</a></li>
+        <li><a href="brewing-equipment.html">Brewing Equipment</a></li>
+        <li><a href="special.html">Special Offers</a></li>
+        <li><a href="workshop.html">Events</a></li>
+        <li><a href="seasonal-food-&-drink.html">Seasonal</a></li>
+        <li><a href="shopping-cart.html">Cart</a></li>
+        <li><a href="index.html#about">About Us</a></li>
+        <li><a href="index.html#contact">Contact Us</a></li>
+        <li><a href="#" id="loginBtn" aria-haspopup="true">Login</a></li>
+        <li><a href="#" id="signupBtn" aria-haspopup="true">Sign Up</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero Image Slideshow -->
+    <section class="slideshow-container" aria-label="Coffee Shop Slideshow">
+      <img class="slide" src="./images/slideshow1.png" alt="Coffee 1" />
+      <img class="slide" src="./images/slideshow2.png" alt="Coffee 2" />
+      <img class="slide" src="./images/slideshow3.png" alt="Coffee 3" />
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <div class="slide-indicators">
+        <span class="indicator active" onclick="currentSlide(1)"></span>
+        <span class="indicator" onclick="currentSlide(2)"></span>
+        <span class="indicator" onclick="currentSlide(3)"></span>
+    </div>
+    </section>
+
+    <!-- About -->
+    <!-- About -->
+  <section id="about" class="about">
+    <div class="container">
+      <h2>About Bean Boutique</h2>
+      <p>Bean Boutique is your cozy and modern coffee haven, where we craft the finest blends of hand-roasted coffee beans served with heart. Enjoy a unique and relaxing experience, whether you're sipping alone or sharing a laugh with friends.</p>
+    </div>
+  </section>
+
+    <!-- Google Map -->
+    <section id="contact" class="map">
+      <h2>Find Us</h2>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18566.48934358485!2d96.09960999781035!3d21.946022660033737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30cb6d612ebac85b%3A0x295ebac956d5e282!2sOcean%20Supercenter!5e0!3m2!1sen!2smm!4v1752241510738!5m2!1sen!2smm" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>Follow Us</p>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook"></a>
+        <a href="#" aria-label="Instagram"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png" alt="Instagram"></a>
+        <a href="#" aria-label="Twitter"><img src="https://cdn-icons-png.flaticon.com/24/733/733635.png" alt="Twitter"></a>
+      </div>
+      <p>&copy; 2025 Bean Boutique Coffee Shop</p>
+    </footer>
+
+    <!-- Login Form Popup -->
+    <div class="popup" id="loginPopup" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
+      <div class="popup-content">
+        <span class="close-btn" aria-label="Close">&times;</span>
+        <h2 id="loginTitle">Login</h2>
+        <input type="text" placeholder="Username" required />
+        <input type="password" placeholder="Password" required />
+        <button>Login</button>
+      </div>
+    </div>
+
+    <!-- Sign Up Form Popup -->
+    <div class="popup" id="signupPopup" role="dialog" aria-labelledby="signupTitle" aria-hidden="true">
+      <div class="popup-content">
+        <span class="close-btn" aria-label="Close">&times;</span>
+        <h2 id="signupTitle">Sign Up</h2>
+        <input type="text" placeholder="Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button>Sign Up</button>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+      <script>
+      // Mobile menu toggle function
+      function toggleMenu() {
+          const mobileNav = document.getElementById('mobile-nav');
+          mobileNav.classList.toggle('active');
+          const mobileMenuBtn = document.getElementById('mobile-menu');
+          mobileMenuBtn.classList.toggle('active');
+          const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+          mobileMenuBtn.setAttribute('aria-expanded', !expanded);
+      }
+      
+      // Slideshow functionality
+        let slideIndex = 1;
+        showSlides(slideIndex);
+        
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+        
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+        
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let indicators = document.getElementsByClassName("indicator");
+            
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            
+            // Hide all slides
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            // Deactivate all indicators
+            for (i = 0; i < indicators.length; i++) {
+                indicators[i].classList.remove("active");
+            }
+            
+            // Show current slide and activate corresponding indicator
+            slides[slideIndex-1].classList.add("active");
+            if (indicators.length > 0) {
+                indicators[slideIndex-1].classList.add("active");
+            }
+        }
+        
+      // Auto-advance slides
+        let autoSlideInterval = setInterval(() => {
+            plusSlides(1);
+        }, 5000);
+        
+        // Pause on hover
+      document.querySelector('.slideshow-container').addEventListener('mouseenter', () => {
+            clearInterval(autoSlideInterval);
+        });
+        
+      document.querySelector('.slideshow-container').addEventListener('mouseleave', () => {
+            autoSlideInterval = setInterval(() => {
+                plusSlides(1);
+            }, 5000);
+        });
+
+      // Enhanced Popup Functionality
+      $(document).ready(function() {
+          // Login button click
+          $("#loginBtn").click(function(e) {
+              e.preventDefault();
+              $("#loginPopup").addClass("active").fadeIn(300);
+              $("body").addClass("popup-open");
+          });
+        
+          // Signup button click
+          $("#signupBtn").click(function(e) {
+              e.preventDefault();
+              $("#signupPopup").addClass("active").fadeIn(300);
+              $("body").addClass("popup-open");
+          });
+        
+          // Close button click
+          $(".close-btn").click(function() {
+              closeAllPopups();
+          });
+          
+          // Close popup when clicking outside
+          $(document).click(function(e) {
+              if ($(e.target).hasClass('popup')) {
+                  closeAllPopups();
+              }
+          });
+          
+          // Close popup with Escape key
+          $(document).keydown(function(e) {
+              if (e.key === "Escape") {
+                  closeAllPopups();
+              }
+          });
+          
+          // Form submission handlers
+          $("#loginPopup button").click(function(e) {
+              e.preventDefault();
+              const username = $("#loginPopup input[type='text']").val();
+              const password = $("#loginPopup input[type='password']").val();
+              
+              if (username && password) {
+                  // Simulate login process
+                  $(this).text("Logging in...").prop("disabled", true);
+                  setTimeout(() => {
+                      alert("Login successful! Welcome back, " + username);
+                      closeAllPopups();
+                      $(this).text("Login").prop("disabled", false);
+                      $("#loginPopup input").val("");
+                  }, 1500);
+              } else {
+                  alert("Please fill in all fields");
+              }
+          });
+          
+          $("#signupPopup button").click(function(e) {
+              e.preventDefault();
+              const name = $("#signupPopup input[type='text']").val();
+              const email = $("#signupPopup input[type='email']").val();
+              const password = $("#signupPopup input[type='password']").val();
+              
+              if (name && email && password) {
+                  // Simulate signup process
+                  $(this).text("Creating account...").prop("disabled", true);
+                  setTimeout(() => {
+                      alert("Account created successfully! Welcome, " + name);
+                      closeAllPopups();
+                      $(this).text("Sign Up").prop("disabled", false);
+                      $("#signupPopup input").val("");
+                  }, 1500);
+              } else {
+                  alert("Please fill in all fields");
+              }
+          });
+          
+                    
+          function closeAllPopups() {
+              $(".popup").removeClass("active").fadeOut(300);
+              $("body").removeClass("popup-open");
+          }
+        });
+      </script>
+
+  </body>
+  </html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Cart - Bean Boutique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="./css/style.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+ <nav class="navbar" role="navigation">
+    <div class="logo" aria-label="Bean Boutique Logo">Bean Boutique</div>
+    <form class="nav-search" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+      <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+      <button type="submit" aria-label="Submit search">
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </form>
+    <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" type="button" onclick="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="nav-links" id="mobile-nav">
+      <li class="mobile-search">
+        <form class="nav-search mobile" role="search" aria-label="Site Search" onsubmit="event.preventDefault(); alert('Search: ' + this.elements['q'].value);">
+          <input type="search" name="q" placeholder="Search..." aria-label="Search" />
+          <button type="submit" aria-label="Submit search">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="7" stroke="#6b4f2f" stroke-width="2"/><line x1="14.4142" y1="14" x2="19" y2="18.5858" stroke="#6b4f2f" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+      </li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="coffee-bean.html">Coffee Beans</a></li>
+      <li><a href="brewing-equipment.html">Brewing Equipment</a></li>
+      <li><a href="special.html">Special Offers</a></li>
+      <li><a href="workshop.html">Events</a></li>
+      <li><a href="seasonal-food-&-drink.html">Seasonal</a></li>
+      <li><a href="shopping-cart.html">Cart</a></li>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#contact">Contact Us</a></li>
+      <li><a href="#" id="loginBtn" aria-haspopup="true">Login</a></li>
+      <li><a href="#" id="signupBtn" aria-haspopup="true">Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <!-- Cart Section -->
+  <section class="cart-container modern-cart">
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-items" class="cart-items-list"></div>
+    <div id="cart-summary" class="cart-summary"></div>
+    <div class="cart-buttons">
+      <button id="order-cart" class="checkout-btn">Checkout</button>
+      <button id="clear-cart" class="clear-btn">Clear Cart</button>
+    </div>
+  </section>
+
+  <!-- Notification Area -->
+  <div id="notification" class="modern-toast" style="display:none;">
+    <span class="toast-icon">✔️</span>
+    <span class="toast-msg">Item added to cart!</span>
+  </div>
+
+  <!-- Order Confirmation Modal -->
+  <div id="orderModal" class="order-modal" style="display:none;">
+    <div class="order-modal-content">
+      <span class="order-modal-close" id="orderModalClose">&times;</span>
+      <h2>Confirm Your Order</h2>
+      <p id="orderModalMsg">Your total order amount is $0.00. Proceed with order?</p>
+      <div class="order-modal-actions">
+        <button id="orderConfirmBtn" class="checkout-btn">Confirm</button>
+        <button id="orderCancelBtn" class="clear-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+  .modern-cart {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+  }
+  .cart-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .cart-item-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    flex-wrap: wrap;
+  }
+  .cart-item-info {
+    flex: 1 1 60%;
+    min-width: 180px;
+  }
+  .cart-item-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+  }
+  .cart-item-price {
+    color: #6b4f2f;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+  }
+  .cart-item-total {
+    color: #333;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+  .cart-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+  }
+  .qty-btn {
+    background: #e0c097;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    color: #6b4f2f;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .qty-btn:hover {
+    background: #f3e5ab;
+  }
+  .cart-qty-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.2rem 0.4rem;
+    font-size: 1rem;
+  }
+  .remove-item-btn {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: color 0.2s;
+  }
+  .remove-item-btn:hover {
+    color: #e74c3c;
+  }
+  .cart-summary {
+    background: #f3e5ab;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    color: #6b4f2f;
+    font-weight: 600;
+    text-align: right;
+  }
+  .checkout-btn {
+    background: #6b4f2f;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-right: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .checkout-btn:hover {
+    background: #543e26;
+  }
+  .clear-btn {
+    background: #fff;
+    color: #6b4f2f;
+    border: 2px solid #6b4f2f;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .clear-btn:hover {
+    background: #f8f8f8;
+    color: #c0392b;
+    border-color: #c0392b;
+  }
+  .empty-cart-msg {
+    text-align: center;
+    color: #999;
+    font-size: 1.2rem;
+    margin: 2rem 0 1rem 0;
+  }
+  .modern-toast {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: #4CAF50;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    z-index: 2000;
+    opacity: 0.98;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
+  .toast-icon {
+    font-size: 1.4rem;
+    margin-right: 0.2rem;
+  }
+  .order-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    transition: background 0.2s;
+  }
+  .order-modal-content {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    max-width: 350px;
+    width: 90vw;
+    text-align: center;
+    position: relative;
+  }
+  .order-modal-close {
+    position: absolute;
+    top: 12px; right: 18px;
+    font-size: 1.6rem;
+    color: #c0392b;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+  }
+  .order-modal-close:hover {
+    color: #e74c3c;
+  }
+  .order-modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+  @media (max-width: 600px) {
+    .modern-cart {
+      padding: 1rem 0.3rem 1rem 0.3rem;
+    }
+    .cart-item-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .cart-summary {
+      font-size: 1rem;
+      padding: 0.7rem;
+    }
+    .modern-toast {
+      right: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 18px;
+      padding: 0.8rem 1.1rem;
+      font-size: 1rem;
+    }
+    .order-modal-content {
+      padding: 1.2rem 0.5rem 1rem 0.5rem;
+    }
+  }
+  </style>
+
+  <!-- Footer -->
+  <footer>
+    <p>Follow Us</p>
+    <div class="social-icons">
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/733/733558.png" alt="Instagram"></a>
+      <a href="#"><img src="https://cdn-icons-png.flaticon.com/24/733/733635.png" alt="Twitter"></a>
+    </div>
+    <p>&copy; 2025 Bean Boutique Coffee Shop</p>
+  </footer>
+
+  <!-- Login Form Popup -->
+  <div class="popup" id="loginPopup" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
+    <div class="popup-content">
+      <span class="close-btn" aria-label="Close">&times;</span>
+      <h2 id="loginTitle">Login</h2>
+      <input type="text" placeholder="Username" required />
+      <input type="password" placeholder="Password" required />
+      <button>Login</button>
+    </div>
+  </div>
+
+  <!-- Sign Up Form Popup -->
+  <div class="popup" id="signupPopup" role="dialog" aria-labelledby="signupTitle" aria-hidden="true">
+    <div class="popup-content">
+      <span class="close-btn" aria-label="Close">&times;</span>
+      <h2 id="signupTitle">Sign Up</h2>
+      <input type="text" placeholder="Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button>Sign Up</button>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu toggle function
+    function toggleMenu() {
+        const mobileNav = document.getElementById('mobile-nav');
+        mobileNav.classList.toggle('active');
+        const mobileMenuBtn = document.getElementById('mobile-menu');
+        mobileMenuBtn.classList.toggle('active');
+        const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+        mobileMenuBtn.setAttribute('aria-expanded', !expanded);
+    }
+    // Sample format: localStorage.setItem("cart", JSON.stringify([{name: "Arabica Beans", price: 10, qty: 1}]));
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let output = '';
+      let total = 0;
+      if (cart.length === 0) {
+        $("#cart-items").html("<p class='empty-cart-msg'>Your cart is empty.</p>");
+        $("#cart-summary").html('');
+        return;
+      }
+      cart.forEach((item, index) => {
+        if (item.price === null || item.price === undefined) {
+          item.price = 0;
+        }
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        output += `
+          <div class="cart-item-card">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-price">Price: $${item.price.toFixed(2)}</div>
+              <div class="cart-qty-controls">
+                <button class="qty-btn" data-index="${index}" onclick="changeQty(this)">-</button>
+                <input type="number" class="cart-qty-input" data-index="${index}" value="${item.qty}" min="1" />
+                <button class="qty-btn" data-index="${index}" onclick="changeQty(this)">+</button>
+              </div>
+              <div class="cart-item-total">Item Total: $${itemTotal.toFixed(2)}</div>
+            </div>
+            <button class="remove-item-btn" data-index="${index}" onclick="removeItem(this)">×</button>
+          </div><hr>
+        `;
+      });
+      $("#cart-items").html(output);
+      $("#cart-summary").html(`<h3>Total: $${total.toFixed(2)}</h3>`);
+    }
+    function changeQty(button) {
+      const index = $(button).data("index");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const input = $(button).siblings(".cart-qty-input");
+      let qty = parseInt(input.val());
+      if ($(button).text().trim() === "+") {
+        qty += 1;
+      } else if ($(button).text().trim() === "-") {
+        qty = Math.max(1, qty - 1);
+      }
+      cart[index].qty = qty;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      loadCart();
+    }
+    function removeItem(button) {
+      const index = $(button).data("index");
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        loadCart();
+    }
+    // Show toast notification with custom message
+    function showToast(message) {
+      $("#notification .toast-msg").text(message);
+      $("#notification").fadeIn(200).delay(2000).fadeOut(400);
+    }
+    // Show order confirmation modal
+    function showOrderModal(total) {
+      $("#orderModalMsg").text(`Your total order amount is $${total.toFixed(2)}. Proceed with order?`);
+      $("#orderModal").fadeIn(150);
+    }
+    function hideOrderModal() {
+      $("#orderModal").fadeOut(150);
+    }
+    $(document).ready(function () {
+      loadCart();
+      $("#clear-cart").click(function () {
+        localStorage.removeItem("cart");
+        loadCart();
+      });
+      $("#order-cart").click(function () {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length === 0) {
+          showToast("Your cart is empty. Please add items before placing an order.");
+          return;
+        }
+        let total = 0;
+        cart.forEach(item => {
+          total += item.price * item.qty;
+        });
+        showOrderModal(total);
+      });
+      // Modal button handlers
+      $("#orderConfirmBtn").click(function() {
+        hideOrderModal();
+        showToast("Order placed successfully!");
+        setTimeout(() => {
+          localStorage.removeItem("cart");
+          loadCart();
+        }, 1200);
+      });
+      $("#orderCancelBtn, #orderModalClose").click(function() {
+        hideOrderModal();
+      });
+      // Close modal on outside click
+      $("#orderModal").click(function(e) {
+        if (e.target === this) hideOrderModal();
+      });
+      // Delegated event binding for close button
+      $(document).on("click", ".popup .close-btn", function(e) {
+        e.stopPropagation();
+        $(this).closest(".popup").removeClass("active").attr("aria-hidden", "true");
+      });
+      // Popup logic for login and signup
+      $("#loginBtn").click(function() {
+        $("#loginPopup").addClass("active").attr("aria-hidden", "false");
+      });
+      $("#signupBtn").click(function() {
+        $("#signupPopup").addClass("active").attr("aria-hidden", "false");
+      });
+      // Close popup when clicking outside of it
+      $(window).click(function(event) {
+        if ($(event.target).hasClass('popup')) {
+          $(".popup").removeClass("active").attr("aria-hidden", "true");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
